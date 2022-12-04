@@ -85,7 +85,7 @@ async def add_text_footer(bot: Client, event: Message):
         await AddFooter(bot, event, footer_text, int(on_event))
 
 
-@AHBot.on_message(filters.channel & filters.photo & ~filters.edited & ~filters.private)
+@AHBot.on_message(filters.channel & filters.photo & ~filters.private)
 async def add_text_footer(bot: Client, event: Message):
     on_event = await db.find_user_id(event.chat.id)
     if on_event is None:

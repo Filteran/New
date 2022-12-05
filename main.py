@@ -52,7 +52,7 @@ async def _settings(bot: Client, event: Message):
     await ShowSettings(editable, user_id=event.from_user.id)
 
 
-@AHBot.on_message(filters.channel & (filters.video | filters.document) & ~filters.private)
+@AHBot.on_message(filters.channel & (filters.video | filters.document) & ~filters.edited & ~filters.private)
 async def add_footer(bot: Client, event: Message):
     on_event = await db.find_user_id(event.chat.id)
     if on_event is None:
@@ -68,7 +68,7 @@ async def add_footer(bot: Client, event: Message):
         await AddFooter(bot, event, footer_text, int(on_event))
 
 
-@AHBot.on_message(filters.channel & filters.text & ~filters.private, group=-1)
+@AHBot.on_message(filters.channel & filters.text & ~filters.edited & ~filters.private, group=-1)
 async def add_text_footer(bot: Client, event: Message):
     on_event = await db.find_user_id(event.chat.id)
     if on_event is None:
@@ -85,7 +85,7 @@ async def add_text_footer(bot: Client, event: Message):
         await AddFooter(bot, event, footer_text, int(on_event))
 
 
-@AHBot.on_message(filters.channel & filters.photo & ~filters.private)
+@AHBot.on_message(filters.channel & ~filters.edited & filters.photo & ~filters.private)
 async def add_text_footer(bot: Client, event: Message):
     on_event = await db.find_user_id(event.chat.id)
     if on_event is None:
